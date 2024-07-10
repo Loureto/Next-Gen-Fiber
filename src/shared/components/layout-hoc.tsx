@@ -1,7 +1,8 @@
 'use client'
 
-import Cookies from 'js-cookie'
 import { ReactNode, useEffect, useState } from 'react'
+
+import { usePathname } from 'next/navigation'
 
 import {
   CalendarIcon,
@@ -11,8 +12,9 @@ import {
   HomeIcon,
   UsersIcon
 } from '@heroicons/react/24/outline'
+import Cookies from 'js-cookie'
+
 import { cn } from '../utils'
-import { usePathname } from 'next/navigation'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -21,11 +23,6 @@ const navigation = [
   { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false }
-]
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false }
 ]
 
 export const LayoutHOC = ({ children }: { children: ReactNode }) => {
@@ -42,7 +39,7 @@ export const LayoutHOC = ({ children }: { children: ReactNode }) => {
 
   if (!isAuthenticated && path !== router) {
     return (
-      <div className="flex-csol relative flex h-screen flex-1 items-center justify-center">
+      <div className="relative flex h-screen flex-1 flex-col items-center justify-center">
         <div className="fixed top-0 h-80 w-full bg-neutral-950" />
         {children}
       </div>
@@ -78,7 +75,7 @@ export const LayoutHOC = ({ children }: { children: ReactNode }) => {
                       >
                         <item.icon
                           aria-hidden="true"
-                          className="h-6 w-6 shrink-0"
+                          className="size-6 shrink-0"
                         />
                         {item.name}
                       </a>

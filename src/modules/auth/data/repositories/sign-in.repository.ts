@@ -1,4 +1,5 @@
 import { HttpClient, HttpStatusCode } from '@/shared/data'
+
 import { ISignIn } from '../../domain/usecases'
 
 export class SignInRepositoryImpl implements ISignIn {

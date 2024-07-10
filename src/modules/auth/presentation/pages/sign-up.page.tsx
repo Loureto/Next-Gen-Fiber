@@ -1,10 +1,10 @@
 'use client'
 
-import { ISignUp } from '../../domain'
+// import { ISignUp } from '../../domain'
 
-interface SignUpProps {
-  authentication: ISignUp
-}
+// interface SignUpProps {
+//   authentication: ISignUp
+// }
 
 export const SignUpPage = () => {
   return (

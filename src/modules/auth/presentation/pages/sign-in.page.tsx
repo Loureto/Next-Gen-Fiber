@@ -1,5 +1,10 @@
 'use client'
 
+import { useForm } from 'react-hook-form'
+
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
 import {
   Button,
   Form,
@@ -11,13 +16,11 @@ import {
   Input
 } from '@/shared/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import Cookies from 'js-cookie'
 import { z } from 'zod'
+
 import { ISignIn } from '../../domain'
 import { accountAdapter } from '../../main'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   username: z.string().min(1, { message: 'Username required' }),
@@ -90,7 +93,7 @@ export const SignUpPage = ({ authentication }: LoginProps) => {
 
           <div className="text-center">
             <Link className="text-sm" href="/sign-up">
-              Don't have an account?{' '}
+              Don't have an account?
               <span className="font-semibold underline">Sign up</span>
             </Link>
           </div>
