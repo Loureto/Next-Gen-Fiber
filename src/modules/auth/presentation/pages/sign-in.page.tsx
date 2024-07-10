@@ -44,7 +44,7 @@ export const SignUpPage = ({ authentication }: LoginProps) => {
     const { accessToken } = accountAdapter(await authentication.signIn(data))
     if (accessToken) {
       Cookies.set('token', accessToken, { expires: 24 * 60 * 60, secure: true })
-      router.push('/dashboard')
+      router.replace('/dashboard')
     }
   }
 

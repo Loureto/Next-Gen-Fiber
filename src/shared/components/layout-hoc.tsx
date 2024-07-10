@@ -12,6 +12,7 @@ import {
   UsersIcon
 } from '@heroicons/react/24/outline'
 import { cn } from '../utils'
+import { usePathname } from 'next/navigation'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -29,7 +30,9 @@ const teams = [
 
 export const LayoutHOC = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const path = usePathname()
   const token = Cookies.get('token')
+  const router = '/dashboard'
 
   useEffect(() => {
     if (token) {
@@ -37,7 +40,7 @@ export const LayoutHOC = ({ children }: { children: ReactNode }) => {
     }
   }, [token])
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && path !== router) {
     return (
       <div className="flex-csol relative flex h-screen flex-1 items-center justify-center">
         <div className="fixed top-0 h-80 w-full bg-neutral-950" />
