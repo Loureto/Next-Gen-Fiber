@@ -17,36 +17,34 @@ import {
 } from '@/shared/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Cookies from 'js-cookie'
-import { z } from 'zod'
 
 import { ISignIn } from '../../domain'
 import { accountAdapter } from '../../main'
-
-const formSchema = z.object({
-  username: z.string().min(1, { message: 'Username required' }),
-  password: z.string().min(1, { message: 'Password required' })
-})
-
-type FormData = z.infer<typeof formSchema>
+import { FormData, formSchema } from '../schemas'
 
 interface LoginProps {
   authentication: ISignIn
 }
 
-export const SignUpPage = ({ authentication }: LoginProps) => {
+const initialValues = {
+  username: '',
+  password: ''
+}
+
+export const SignInPage = ({ authentication }: LoginProps) => {
   const router = useRouter()
   const form = useForm<FormData>({
-    defaultValues: {
-      username: '',
-      password: ''
-    },
+    defaultValues: { ...initialValues },
     resolver: zodResolver(formSchema)
   })
 
   async function onSubmit(data: ISignIn.Params) {
     const { accessToken } = accountAdapter(await authentication.signIn(data))
     if (accessToken) {
-      Cookies.set('token', accessToken, { expires: 24 * 60 * 60, secure: true })
+      Cookies.set('token', accessToken, {
+        expires: 24 * 60 * 60,
+        secure: true
+      })
       router.replace('/dashboard')
     }
   }
@@ -56,7 +54,7 @@ export const SignUpPage = ({ authentication }: LoginProps) => {
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <h1 className="mb-12 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Access your account
           </h1>
 
           <FormField
@@ -94,7 +92,7 @@ export const SignUpPage = ({ authentication }: LoginProps) => {
           <div className="text-center">
             <Link className="text-sm" href="/sign-up">
               Don't have an account?
-              <span className="font-semibold underline">Sign up</span>
+              <span className="pl-1 font-semibold underline">Sign up</span>
             </Link>
           </div>
         </form>

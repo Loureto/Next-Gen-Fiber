@@ -12,7 +12,7 @@ export default function middleware(request: NextRequest) {
   const dashboardtURL = new URL(routes.dashboard, request.url)
 
   if (!token) {
-    if (request.nextUrl.pathname === routes.signIn) {
+    if (request.nextUrl.pathname !== routes.dashboard) {
       return NextResponse.next()
     }
     return NextResponse.redirect(signInURL)
@@ -24,5 +24,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/sign-up/:path*', '/dashboard/:path*']
+  matcher: ['/', '/sign-up', '/dashboard/:path*']
 }
